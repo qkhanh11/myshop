@@ -1,0 +1,103 @@
+{% extends "home/base.html" %}
+{% block content %}
+  <!-- Breadcrumb Begin -->
+  <div class="breadcrumb-option">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-6 col-md-6 col-sm-6">
+                <div class="breadcrumb__text">
+                    <h2>Shop</h2>
+                </div>
+            </div>
+            <div class="col-lg-6 col-md-6 col-sm-6">
+                <div class="breadcrumb__links">
+                    <a href="{% url "home:home" %}">Home</a>
+                    <span>Shop</span>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- Breadcrumb End -->
+
+<!-- Shop Section Begin -->
+
+<section class="shop spad">
+    <div class="container">
+        <div class="shop__option">
+            <div class="row">
+                <div class="col-lg-7 col-md-7">
+                    <div class="shop__option__search">
+                        <form action="">
+                            <select name="category" id="mySelect" >
+                                <option value="">Category</option>
+                                {% for item in category %}
+                                  <option value="{{item.id}}">{{item.category_name}}</option>
+                                {% endfor %}                        
+                            </select>
+                            <input type="text" placeholder="Search" name="keyword">
+                            <button type="submit"><i class="fa fa-search"></i></button>
+                        </form>
+                    </div>
+                </div>
+                <div class="col-lg-5 col-md-5">
+                    <div class="dropdown shop__option__right">
+                        <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" style="background-color:  white; color: black;">
+                          Sắp xếp theo
+                        </button>
+                        <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                            <a class="dropdown-item" href="?sort=-create_at{% for k,v in request.GET.items %}{% if k != 'sort' %}&{{k}}={{v}}{% endif %}{% endfor %}">Mới nhất</a>
+                            <a class="dropdown-item" href="?sort=create_at{% for k,v in request.GET.items %}{% if k != 'sort' %}&{{k}}={{v}}{% endif %}{% endfor %}">Cũ nhất</a>
+                            <a class="dropdown-item" href="?sort=product_name{% for k,v in request.GET.items %}{% if k != 'sort' %}&{{k}}={{v}}{% endif %}{% endfor %}">Tên sản phẩm</a>
+                            <a class="dropdown-item" href="?sort=price{% for k,v in request.GET.items %}{% if k != 'sort' %}&{{k}}={{v}}{% endif %}{% endfor %}">Giá tăng</a>
+                            <a class="dropdown-item" href="?sort=-price{% for k,v in request.GET.items %}{% if k != 'sort' %}&{{k}}={{v}}{% endif %}{% endfor %}">Giá giảm</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            {% for item in products_list %}
+            {% if not item.delete_flag %}
+            <a href="{% url "product:detail" item.id%}">
+                <div class="col-lg-3 col-md-6 col-sm-6">
+                    <div class="product__item">
+                        <div class="product__item__pic set-bg" data-setbg="{{item.image.url}}">
+                            <div class="product__label">
+                                <span>{{item.category}}</span>
+                            </div>
+                        </div>
+                        <div class="product__item__text">
+                            <h6><a href="#">{{item.product_name}}</a></h6>
+                            <div class="product__item__price">{{item.price}} VNĐ</div>
+                            <div class="cart_add">
+                                <a href="#">Add to cart </a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </a>
+            {% endif %}
+            {% endfor %}
+        </div>
+        <div class="shop__last__option">
+            <div class="row">
+                <div class="col-lg-6 col-md-6 col-sm-6">
+                    <ul class="pagination">
+                        <li class="page-item {% if not products_list.has_previous %} disabled {% endif %}">
+                          <a class="page-link" href="?page={% if products_list.has_previous %}{{products_list.previous_page_number}}{% for k,v in request.GET.items %}{% if k != 'page' %}&{{k}}={{v}}{% endif %}{% endfor %}{% endif %}">Previous</a>
+                        </li>
+                        <li class="page-item active" aria-current="page">
+                          <a class="page-link" href="#">{{products_list.number}} / {{products_list.paginator.num_pages}}</a>
+                        </li>
+                        <li class="page-item {% if not products_list.has_next %} disabled {% endif %}" >
+                          <a class="page-link" href="?page={% if products_list.has_next %}{{products_list.next_page_number}}{% endif %}{% for k,v in request.GET.items %}{% if k != 'page' %}&{{k}}={{v}}{% endif %}{% endfor %}">Next</a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+<!-- Shop Section End -->
+{% endblock content %}

@@ -42,6 +42,9 @@ INSTALLED_APPS = [
     'category',
     'home',
     'about',
+    'register',
+    'login2',
+    'logout2'
 ]
 
 MIDDLEWARE = [
@@ -136,3 +139,6 @@ CKEDITOR_UPLOAD_PATH = "uploads/"
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
+DEFAULT_SORT = "-create_at"
+
+DEFAULT_LIMIT = 12

@@ -10,6 +10,7 @@ class ProductModel(models.Model):
     price = models.IntegerField(null=True)
     quantity = models.IntegerField(default=0)
     description = models.TextField(null=True)
+    # sale = models.IntegerField(null=True)
     create_at = models.DateTimeField(auto_now_add=True)
     update_at = models.DateTimeField(auto_now=True)
     delete_flag = models.BooleanField(default=False)

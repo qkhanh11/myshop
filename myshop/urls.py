@@ -23,7 +23,10 @@ urlpatterns = [
     path('admin/', admin.site.urls),
     path('product/', include('product.urls')),
     path('',include('home.urls')),
-    path('about/',include('about.urls'))
+    path('about/',include('about.urls')),
+    path('register/', include('register.urls')),
+    path('login/',include('login2.urls')),
+    path('dangxuat/', include('logout2.urls')),
 ]
 
 urlpatterns += static(settings.MEDIA_URL, document_root = settings.MEDIA_ROOT)
